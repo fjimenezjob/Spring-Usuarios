@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository("clienteDaoJPA")
 public class ClienteDaoImpl implements IClienteDao {
@@ -18,14 +17,17 @@ public class ClienteDaoImpl implements IClienteDao {
     
     @Override
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public List<Cliente> findAll() {
 
         return em.createQuery("from Cliente").getResultList();
     }
+    
+    @Override
+    public Cliente findOne(Long id) {
+        return em.find(Cliente.class, id);
+    }
 
     @Override
-    @Transactional
     public void save(Cliente cliente) {
         if(cliente.getId() != null && cliente.getId() >0 ) {
             em.merge(cliente);
@@ -35,8 +37,7 @@ public class ClienteDaoImpl implements IClienteDao {
     }
 
     @Override
-    public Cliente findOne(Long id) {
-        return em.find(Cliente.class, id);
+    public void delete(Long id) {
+        em.remove(findOne(id));
     }
-
 }

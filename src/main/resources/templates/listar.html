@@ -76,16 +76,13 @@
                 <section class="hero is-dark">
                         <div class="hero-body">
                           <div class="container">
-                            <h1 th:text="${titulo}" class="title">
-                                    
-                            </h1>
+                            <h1 th:text="${titulo}" class="title"></h1>
                             <h2 class="subtitle">
                               Lista de Usuarios de esta Web
                             </h2>
                           </div>
                         </div>
-                      </section>
-
+                    </section>
             </header>
             <a th:href="@{/form}">Formulario Registro</a>
             <table class="table is-striped">
@@ -97,6 +94,7 @@
                         <th> Email </th>
                         <th> Fecha </th>
                         <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,6 +105,7 @@
                         <td th:text="${cliente.email}"></td>
                         <td th:text="${cliente.createdAt}"></td>
                         <td><a class="button is-warning" th:href="@{/form/} + ${cliente.id}" th:text="Editar"></a></td>
+                        <td><a class="button is-danger" th:href="@{/eliminar/} + ${cliente.id}" th:text="Eliminar" onclick="return confirm('Estas seguro que quieres eliminar ??');"></a></td>
                     </tr>
                 </tbody>
             </table>

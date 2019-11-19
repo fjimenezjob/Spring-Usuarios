@@ -1,11 +1,12 @@
-package com.lluviadeideas.jpa_mysql.models.dao;
+package com.lluviadeideas.jpa_mysql.models.service;
 
 import java.util.List;
 
 import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
 
-public interface IClienteDao {
 
+public interface IClienteService {
+    
     public List<Cliente> findAll();
 
     public void save(Cliente cliente);
