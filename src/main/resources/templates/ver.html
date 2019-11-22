@@ -9,43 +9,42 @@
             <header th:replace="layout/layout :: header"></header>
             <main>
                 <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-centred">
-                            <img th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.foto}"
-                                style="max-width: 25%;">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-
-                            </div>
-                            <div class="media-content">
-                                <span>
-                                    <p class="title is-4" th:text="${cliente.nombre}"></p>
-                                </span>
-                                <span>
-                                    <p class="title is-4" th:text="${cliente.apellido}"></p>
-                                </span>
+                    <div class="columns">
+                        <div class="column is-half
+                        is-offset-one-quarter is-1">
+                            <div class="card-image is-centered">
+                                <figure th:if="${cliente.foto}" class="image is-128x128">
+                                    <img  class="is-rounded" th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.foto}">
+                                </figure>
                             </div>
                         </div>
-
-                        <div class="content">
-                            <ul class="">
-                                <li th:text="${'Email: '+cliente.email}"></li>
-                                <li th:text="${'Fecha: '+cliente.createdAt}"></li>
-                            </ul>
+                        <div class="column">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                    </div>
+                                    <div class="media-content">
+                                        <span>
+                                            <p class="title is-4" th:text="${cliente.nombre}"></p>
+                                        </span>
+                                        <span>
+                                            <p class="title is-4" th:text="${cliente.apellido}"></p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <ul class="">
+                                        <li th:text="${'Email: '+cliente.email}"></li>
+                                        <li th:text="${'Fecha: '+cliente.createdAt}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <a th:href="@{/listar}"><button class="button is-success is-rounded">Volver</button></a>
                         </div>
-                    </div>
-                </div>
-                <div class="columns">
-                    <div class="column">
-                    </div>
-                    <div class="column">
-
                     </div>
                 </div>
             </main>
         </div>
     </section>
+    <footer th:replace="layout/layout :: footer"></footer>
 </body>

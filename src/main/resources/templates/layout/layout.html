@@ -15,7 +15,7 @@
             <header th:fragment="header">
                 <nav class="navbar" role="navigation" aria-label="main navigation">
                     <div class="navbar-brand">
-                        <a class="navbar-item" href="https://bulma.io">
+                        <a class="navbar-item">
                             <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
                         </a>
 
@@ -73,18 +73,27 @@
                     </div>
                 </nav>
                 <section class="hero is-dark">
-                        <div class="hero-body">
-                          <div class="container">
+                    <div class="hero-body">
+                        <div class="container">
                             <h1 th:text="${titulo}" class="title"></h1>
                             <h2 th:text="${subtitulo}" class="subtitle">
-                              
+
                             </h2>
-                          </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
             </header>
             <main th:fragment="main"></main>
-            <footer th:fragment="footer" class="container"></footer>
+            <footer th:fragment="footer">
+                <div class="content has-text-centered">
+                    <p>
+                        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is
+                        licensed
+                        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                    </p>
+                </div>
+            </footer>
         </div>
     </section>
 </body>
