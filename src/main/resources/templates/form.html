@@ -30,6 +30,10 @@
                             <small style="color: red;" th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}"></small></td>
                         </tr>
                         <tr>
+                            <td>Foto</td>
+                            <td> <input class="file is-rounded" type="file" name="file"> </td>
+                        </tr>
+                        <tr>
                             <td><button class="button is-success is-rounded" type="submit">Enviar</button></td>
                             <td><button class="button is-dagner is-rounded" type="reset">Borrar</button></td>
                         </tr>

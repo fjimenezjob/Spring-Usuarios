@@ -75,5 +75,6 @@ public class PageRender<T> {
     }
 
     public boolean isHasPrevious() {
-            return page.hasPrevious();
-        }}
+        return page.hasPrevious();
+    }
+}

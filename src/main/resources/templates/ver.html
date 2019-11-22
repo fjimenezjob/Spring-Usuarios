@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <header th:replace="layout/layout :: header"></header>
+            <main>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-centred">
+                            <img th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.foto}"
+                                style="max-width: 25%;">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+
+                            </div>
+                            <div class="media-content">
+                                <span>
+                                    <p class="title is-4" th:text="${cliente.nombre}"></p>
+                                </span>
+                                <span>
+                                    <p class="title is-4" th:text="${cliente.apellido}"></p>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <ul class="">
+                                <li th:text="${'Email: '+cliente.email}"></li>
+                                <li th:text="${'Fecha: '+cliente.createdAt}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                    </div>
+                    <div class="column">
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+</body>
