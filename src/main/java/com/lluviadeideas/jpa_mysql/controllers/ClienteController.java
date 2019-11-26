@@ -1,5 +1,6 @@
 package com.lluviadeideas.jpa_mysql.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,9 +17,13 @@ import com.lluviadeideas.jpa_mysql.util.paginator.PageRender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @SessionAttributes("cliente")
@@ -40,6 +44,29 @@ public class ClienteController {
     private IClienteService clienteService;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private final static String UPLOADS_FOLDER = "uploads";
+
+    @GetMapping(value = "/uploads/{filename:.+}") // El ":.+" lo que hace es cojer la extensión del archivo (nombre de
+                                                  // la foto + extensión).
+    public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
+        Path pathFoto = Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
+        log.info("pathFoto: " + pathFoto);
+        Resource recurso = null;
+
+        try {
+            recurso = new UrlResource(pathFoto.toUri());
+            if (!recurso.exists() && !recurso.isReadable()) {
+                throw new RuntimeException("Error: No se puede cargar la Imagen: " + pathFoto.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+                .body(recurso);
+    }
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
@@ -84,14 +111,22 @@ public class ClienteController {
             @RequestParam("file") MultipartFile foto, SessionStatus status) {
 
         if (!foto.isEmpty()) {
+            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto().length() > 0) {
+                Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(cliente.getFoto()).toAbsolutePath();
+                File archivo = rootPath.toFile();
+
+                if (archivo.exists() && archivo.canRead()) {
+                    archivo.delete();
+                }
+            }
 
             String uniqueFileName = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
-            Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+            Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(uniqueFileName);
             Path rootAbsolutePath = rootPath.toAbsolutePath();
 
-            log.info("rootPath: " + rootPath); 
+            log.info("rootPath: " + rootPath);
             log.info("rootAbsolutePath: " + rootAbsolutePath);
-            
+
             try {
                 Files.copy(foto.getInputStream(), rootAbsolutePath);
                 cliente.setFoto(uniqueFileName);
@@ -111,11 +146,10 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/ver/{id}")
-    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model) {
         Cliente cliente = clienteService.findOne(id);
 
         if (cliente == null) {
-            flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
             return "redirect:/listar";
         }
         model.put("cliente", cliente);
@@ -127,7 +161,15 @@ public class ClienteController {
     public String eliminar(@PathVariable(value = "id") Long id) {
 
         if (id > 0) {
+            Cliente cliente = clienteService.findOne(id);
             clienteService.delete(id);
+
+            Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(cliente.getFoto()).toAbsolutePath();
+            File archivo = rootPath.toFile();
+
+            if (archivo.exists() && archivo.canRead()) {
+                archivo.delete();
+            }
         }
         return "redirect:/listar";
     }
