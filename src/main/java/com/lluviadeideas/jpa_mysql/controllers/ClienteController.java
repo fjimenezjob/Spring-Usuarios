@@ -79,8 +79,7 @@ public class ClienteController {
             @RequestParam("file") MultipartFile foto, SessionStatus status) {
 
         if (!foto.isEmpty()) {
-            Path directorioRecursos = Paths.get("src//main//resources//static/uploads");
-            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            String rootPath = "D://Temp//uploads";
 
             try {
                 byte[] bytes = foto.getBytes();
@@ -105,7 +104,7 @@ public class ClienteController {
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
         Cliente cliente = clienteService.findOne(id);
-        
+
         if (cliente == null) {
             flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
             return "redirect:/listar";
