@@ -23,14 +23,18 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "facturas")
 public class Factura implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String descripcion;
     private String observacion;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "created_At")
+    @Column(name = "created_at")
     private Date created_At;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -103,17 +107,11 @@ public class Factura implements Serializable {
         this.cliente = cliente;
     }
 
-    private static final long serialVersionUID = 1L;
-
     public List<ItemFactura> getItems() {
         return items;
     }
 
     public void setItems(List<ItemFactura> items) {
         this.items = items;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

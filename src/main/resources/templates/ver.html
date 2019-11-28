@@ -14,7 +14,8 @@
                         is-offset-one-quarter is-1">
                             <div class="card-image is-centered">
                                 <figure th:if="${cliente.foto}" class="image is-128x128">
-                                    <img  class="is-rounded" th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.foto}">
+                                    <img class="is-rounded" th:src="@{'/uploads/' + ${cliente.foto}}"
+                                        th:alt="${cliente.foto}">
                                 </figure>
                             </div>
                         </div>
@@ -43,6 +44,32 @@
                         </div>
                     </div>
                 </div>
+                <section class="section">
+                    <div class="container">
+                        <div th:if="${#lists.isEmpty(cliente.facturas)}" class="notification is-warning">
+                            <h1>No hay facturas asociadas para el cliente <strong th:text="${cliente.nombre + ' ' + cliente.apellido + '.'}"></strong></h1>
+                            
+                        </div>
+                        <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table is-striped is-bordered is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Descripcion</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="factura: ${cliente.facturas}">
+                                    <td th:text="${factura.id}"></td>
+                                    <td th:text="${factura.descripcion}"></td>
+                                    <td th:text="${factura.created_At}"></td>
+                                    <td th:text="${factura.total}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </main>
         </div>
     </section>

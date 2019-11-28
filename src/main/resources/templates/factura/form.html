@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+            <head th:replace="layout/layout :: head"></head>
+<body>
+    <section class="section">
+        <div class="container">
+
+            <header th:replace="layout/layout :: header"></header>
+            <div class="card">
+                <div class="columns">
+                    <div class="column is-half
+                        is-offset-one-quarter is-fullwidth">
+                        <form th:action="@{/factura/form/}" th:object="${factura}" method="POST">
+                            <div class="field">
+                                <div class="control">
+                                    <label class="label">Cliente: </label>
+                                    <input class="input is-rounded"
+                                        th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"
+                                        disabled='disabled' />
+                                    <label class="label">Descripcion:</label>
+                                    <textarea class="textarea is-info" th:field="*{descripcion}"
+                                        placeholder="Descripcion..."></textarea>
+                                        <label class="label">Observaciones: </label>
+                                    <input class="textarea is-info" type="text" th:field="*{observacion}"
+                                        placeholder="Observaciones...">
+                                        <br><br>
+                                    <button class="button is-rounded" type="submit">Crear Factura</button>
+                                    <a th:href="@{/listar}"><button
+                                            class="button is-success is-rounded">Volver</button></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>

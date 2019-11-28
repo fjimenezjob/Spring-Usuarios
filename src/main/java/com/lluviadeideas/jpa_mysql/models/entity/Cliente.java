@@ -34,7 +34,7 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotEmpty
-    @Size(min = 4, max = 20) // Hay muchas anotaciones para validar lo que viene de un formularo
+    @Size(min = 2, max = 20) // Hay muchas anotaciones para validar lo que viene de un formularo
     private String nombre;
 
     @NotEmpty
@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
-    @OneToMany(mappedBy = "cliente",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Factura> facturas;
 
     private String foto;

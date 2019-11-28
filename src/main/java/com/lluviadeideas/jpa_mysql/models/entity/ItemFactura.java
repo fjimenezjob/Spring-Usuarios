@@ -46,9 +46,4 @@ public class ItemFactura implements Serializable {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
 }
