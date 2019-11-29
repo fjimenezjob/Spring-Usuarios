@@ -3,6 +3,7 @@ package com.lluviadeideas.jpa_mysql.models.service;
 import java.util.List;
 
 import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
+import com.lluviadeideas.jpa_mysql.models.entity.Producto;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -19,4 +20,6 @@ public interface IClienteService {
     public Cliente findOne(Long id);
 
     public void delete(Long id);
+
+    public List<Producto> findByName(String term);
 }

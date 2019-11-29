@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
     <title th:text="${titulo}"></title>
 </head>
 
@@ -92,6 +93,8 @@
                         <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
                         is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
                     </p>
+                    <script th:src="@{/js/jquery-3.2.1.min.js}" ></script>
+                    <script th:src="@{/js/jquery-ui.min.js}"></script>
                 </div>
             </footer>
         </div>

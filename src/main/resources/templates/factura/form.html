@@ -13,28 +13,34 @@
                         <form th:action="@{/factura/form/}" th:object="${factura}" method="POST">
                             <div class="field">
                                 <div class="control">
+
                                     <label class="label">Cliente: </label>
                                     <input class="input is-rounded"
                                         th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"
                                         disabled='disabled' />
+
                                     <label class="label">Descripcion:</label>
                                     <textarea class="textarea is-info" th:field="*{descripcion}"
                                         placeholder="Descripcion..."></textarea>
-                                        <label class="label">Observaciones: </label>
+
+                                    <label class="label">Observaciones: </label>
                                     <input class="textarea is-info" type="text" th:field="*{observacion}"
                                         placeholder="Observaciones...">
-                                        <br><br>
-                                    <button class="button is-rounded" type="submit">Crear Factura</button>
-                                    <a th:href="@{/listar}"><button
-                                            class="button is-success is-rounded">Volver</button></a>
+
+                                    <label class="label">Buscar Producto: </label>
+                                    <input class="select is-rounded" name="buscar_producto" id="buscar_producto">
+
+                                    <br><br>
+                                    <button class="button is-rounded" type="submit">Crear Factura</button> <br><br>
                                 </div>
                             </div>
                         </form>
+                        <a th:href="@{/ver/} + ${factura.cliente.id}"><button class="button is-success is-rounded">Volver</button></a>
                     </div>
-
                 </div>
             </div>
         </div>
     </section>
     <footer th:replace="layout/layout :: footer"></footer>
+    <script th:replace="factura/js/autocomplete-productos :: javascript"></script>
 </body>
