@@ -17,18 +17,18 @@
                                     <label class="label">Cliente: </label>
                                     <input class="input is-rounded"
                                         th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"
-                                        disabled='disabled' />
+                                        disabled='disabled'/>
 
                                     <label class="label">Descripcion:</label>
                                     <textarea class="textarea is-info" th:field="*{descripcion}"
                                         placeholder="Descripcion..."></textarea>
 
                                     <label class="label">Observaciones: </label>
-                                    <input class="textarea is-info" type="text" th:field="*{observacion}"
-                                        placeholder="Observaciones...">
+                                    <textarea class="textarea is-info" th:field="*{observacion}"
+                                        placeholder="Observaciones..."></textarea>
 
                                     <label class="label">Buscar Producto: </label>
-                                    <input class="select is-rounded" name="buscar_producto" id="buscar_producto">
+                                    <input class="select is-rounded is-info" name="buscar_producto" id="buscar_producto">
 
                                     <br><br>
                                     <button class="button is-rounded" type="submit">Crear Factura</button> <br><br>
@@ -38,6 +38,19 @@
                         <a th:href="@{/ver/} + ${factura.cliente.id}"><button class="button is-success is-rounded">Volver</button></a>
                     </div>
                 </div>
+                <table th:replace="factura/plantilla-items :: itemsFactura"></table>
+
+                <table id="cargarItemProductos" class="table is-striped is-bordered is-hoverable is-fullwidth">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

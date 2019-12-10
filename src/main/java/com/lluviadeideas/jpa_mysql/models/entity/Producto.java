@@ -67,5 +67,4 @@ public class Producto implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
 }
