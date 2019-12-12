@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lluviadeideas.jpa_mysql.models.dao.IClienteDao;
+import com.lluviadeideas.jpa_mysql.models.dao.IFacturaDao;
 import com.lluviadeideas.jpa_mysql.models.dao.IProductoDao;
 import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
+import com.lluviadeideas.jpa_mysql.models.entity.Factura;
 import com.lluviadeideas.jpa_mysql.models.entity.Producto;
 
 @Service
@@ -22,6 +24,9 @@ public class ClienteServiceImpl implements IClienteService {
     @Autowired
     private IProductoDao productoDao;
 
+    @Autowired
+    private IFacturaDao facturaDao;
+
     @Override
     @Transactional(readOnly = true)
     public List<Cliente> findAll() {
@@ -30,34 +35,47 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Override
     @Transactional
-    public void save(Cliente cliente) {
+    public void save(final Cliente cliente) {
         clienteDao.save(cliente);
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente findOne(Long id) {
+    public Cliente findOne(final Long id) {
         return clienteDao.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(final Long id) {
         clienteDao.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Cliente> findAll(Pageable pageable) {
+    public Page<Cliente> findAll(final Pageable pageable) {
 
         return clienteDao.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Producto> findByName(String term) {
+    public List<Producto> findByName(final String term) {
 
-        return productoDao.findByNombreLikeIgnoreCase("%"+term+"%");
+        return productoDao.findByNombreLikeIgnoreCase("%" + term + "%");
+    }
+
+    @Override
+    @Transactional
+    public void saveFactura(Factura factura) {
+        facturaDao.save(factura);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Producto finProductoById(Long id) {
+
+        return productoDao.findById(id).orElse(null);
     }
 }
