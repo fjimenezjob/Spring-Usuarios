@@ -29,14 +29,15 @@
 				},
 				select : function(event, ui) {
 					//$("#buscar_producto").val(ui.item.label);
+					// 	Autocompleta y reemplaza las lineas de la tabla y carga los productos
 
-					if(itemsHelper.hasProducto(ui.item.value)){
+					if(itemsHelper.hasProducto(ui.item.value)){ 
+						// Incrementa la cantidad cuando agregas un producto que ya estaba en la factura.
 						itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
 						return false;
 					}
 
 					var linea = $("#plantillaItemsFactura").html();
-
 					linea = linea.replace(/{ID}/g, ui.item.value);
 					linea = linea.replace(/{NOMBRE}/g, ui.item.label);
 					linea = linea.replace(/{PRECIO}/g, ui.item.precio);
@@ -60,12 +61,12 @@
 			},
 			hasProducto: function(id){
 				var resultado = false;
+				
 				$('input[name="item_id[]"]').each(function(){
 					if(parseInt(id) == parseInt($(this).val())){
 						resultado = true;
 					}
 				});
-
 				return resultado;
 			},
 			incrementaCantidad: function(id, precio) {

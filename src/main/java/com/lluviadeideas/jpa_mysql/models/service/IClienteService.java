@@ -22,7 +22,7 @@ public interface IClienteService {
 
     public void delete(Long id);
 
-    public List<Producto> findByName(String term);
+    public List<Producto> findByNombre(String term);
 
     public void saveFactura(Factura factura);
 

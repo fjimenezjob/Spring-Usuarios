@@ -48,7 +48,7 @@ public class FacturaController {
 
     @GetMapping(value = "/cargar-productos/{term}", produces = { "application/json" })
     public @ResponseBody List<Producto> cargarProductos(@PathVariable String term) {
-        return clienteService.findByName(term);
+        return clienteService.findByNombre(term);
     }
 
     @PostMapping("/form")
@@ -56,7 +56,9 @@ public class FacturaController {
             @RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, SessionStatus status) {
 
         for (int i = 0; i < itemId.length; i++) {
+
             Producto producto = clienteService.finProductoById(itemId[i]);
+
             ItemFactura linea = new ItemFactura();
             linea.setCantidad(cantidad[i]);
             linea.setProducto(producto);
