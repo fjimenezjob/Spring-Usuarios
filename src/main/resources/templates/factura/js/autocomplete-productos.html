@@ -63,10 +63,11 @@
 				var resultado = false;
 				
 				$('input[name="item_id[]"]').each(function(){
-					if(parseInt(id) == parseInt($(this).val())){
+					if(parseInt(id) == parseInt($(this).val()) ){
 						resultado = true;
 					}
 				});
+
 				return resultado;
 			},
 			incrementaCantidad: function(id, precio) {
@@ -75,7 +76,7 @@
 				this.calcularImporte(id, precio, cantidad);
 		},
 		eliminarLineaFactura(id){
-			$("#row_"+id).remove();
+			$("#row_" + id).remove();
 			this.calcularGranTotal();
 		},
 		calcularGranTotal: function(){

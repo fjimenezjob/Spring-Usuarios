@@ -6,13 +6,10 @@
 <body>
     <section class="section">
         <div class="container">
-
             <header th:replace="layout/layout :: header"></header>
             <div class="card">
                 <div class="columns">
-                    <div class="column is-half
-                        is-offset-one-quarter is-fullwidth">
-
+                    <div class="container">
                         <form th:action="@{/factura/form/}" th:object="${factura}" method="POST">
                             <div class="field">
                                 <div class="control">
@@ -35,34 +32,36 @@
                                         id="buscar_producto">
                                     <table th:replace="factura/plantilla-items :: itemsFactura"></table>
                                     <br><br>
-                                    <button class="button is-rounded" type="submit">Crear Factura</button> <br><br>
+                                    <button class="button is-rounded" th:value="${titulo}" type="submit">Crear
+                                        Factura</button> <br><br>
+                                    </div>
                                 </div>
+                                <table id="cargarItemProductos" class="table is-striped is-bordered is-hoverable is-fullwidth">
+                                    <thead>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                        <th>Eliminar</th>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Aqui se mete las filas de los productos automaticamente a traves del js -->
+                                    </tbody>
+                                </table>
                             </div>
-                    </div>
                 </div>
-                <table id="cargarItemProductos" class="table is-striped is-bordered is-hoverable is-fullwidth">
-                    <thead>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                        <th>Eliminar</th>
-                    </thead>
-                    <tbody>
-                        <!-- Aqui se mete las filas de los productos automaticamente a traves del js -->
-                    </tbody>
-                </table>
                 <a href="#" class="button is-warning">
                     <h5>TOTAL: <span id="gran_total">0</span>€</h5>
+                </form>
                 </a>
             </div>
-        </form>
-        <div class="content has-text-centered" >
+        <div class="content has-text-centered">
             <a th:href="@{/ver/} + ${factura.cliente.id}"><button
-            class="button is-success is-rounded">Volver</button></a>
-        </div>
+                class="button is-success is-rounded">Volver</button></a>
+            </div>
         </div>
     </section>
     <footer th:replace="layout/layout :: footer"></footer>
     <script th:replace="factura/js/autocomplete-productos :: javascript"></script>
+
 </body>

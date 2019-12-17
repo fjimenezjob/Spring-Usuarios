@@ -52,8 +52,10 @@ public class FacturaController {
     }
 
     @PostMapping("/form")
-    public String guardar(Factura factura, @RequestParam(name = "item_id[]", required = false) Long[] itemId,
-            @RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, SessionStatus status) {
+    public String guardar(Factura factura,
+        @RequestParam(name = "item_id[]", required = false) Long[] itemId,
+        @RequestParam(name = "cantidad[]", required = false) Integer[] cantidad,
+        SessionStatus status) {
 
         for (int i = 0; i < itemId.length; i++) {
 
@@ -69,6 +71,6 @@ public class FacturaController {
         
         clienteService.saveFactura(factura);
         status.setComplete();
-        return "redirect:/ver/"+factura.getCliente().getId();
+        return "redirect:/ver/" + factura.getCliente().getId();
     }
 }
