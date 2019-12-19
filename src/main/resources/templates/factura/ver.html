@@ -8,7 +8,7 @@
         <div class="container">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title" th:text="${titulo}"></p>
+                    <h1 class="card-header-title" th:text="${titulo}"></h1>
                     <a href="#" class="card-header-icon" aria-label="more options">
                         <span class="icon">
                             <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -21,22 +21,54 @@
 
                         <ul>
                             <li th:text="'Datos del cliente'" class="title is-primary"></li>
-                            <li th:text="${factura.cliente}"></li>
+                            <li th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"></li>
                             <li th:text="${factura.cliente.email}"></li>
                         </ul>
                         <ul>
-                            <li th:text="'Datos de la Factura'" class="is-primary"></li>
+                            <li th:text="'Datos de la Factura'" class="title is-primary"></li>
                             <li th:text="'Folio: ' + ${factura.id}"></li>
                             <li th:text="'Descripcion: ' + ${factura.descripcion}"></li>
                             <li th:text="'Fecha: ' + ${factura.created_At}"></li>
                         </ul>
+                        <table class="table is-striped is-bordered is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="linea: ${factura.items}">
+                                    <td th:text="${linea.producto.nombre}"></td>
+                                    <td th:text="${linea.producto.precio}"></td>
+                                    <td th:text="${linea.cantidad}"></td>
+                                    <td th:text="${linea.calcularImporte()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5 class="button is-warning is-pulled-right" th:text="${'Total:  ' + factura.total+ '€'}"></h5>
+                    <div class="card">
+                        <header class="card-header">
+                          <p class="card-header-title">
+                            Observaciones
+                          </p>
+                          <a href="#" class="card-header-icon" aria-label="more options">
+                            <span class="icon">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            <p th:text="${factura.observacion}" ></p>
+                          </div>
+                        </div>
                     </div>
                 </div>
-                <footer class="card-footer">
-                    <a href="#" class="card-footer-item">Save</a>
-                    <a href="#" class="card-footer-item">Edit</a>
-                    <a href="#" class="card-footer-item">Delete</a>
-                </footer>
+                <a th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
             </div>
         </div>
     </section>
