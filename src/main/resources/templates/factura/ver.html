@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head th:replace="layout/layout :: header"></head>
+
+<head th:replace="layout/layout :: head"></head>
+
 <body>
-<section class="section">
-    <div class="container">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title" th:text="${titulo}"></p>
-                <a href="#" class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
-                </a>
-            </header>
-            <div class="card-content">
-                <div class="content">
+    <section class="section">
+        <div class="container">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title" th:text="${titulo}"></p>
+                    <a href="#" class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <a th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
 
+                        <ul>
+                            <li th:text="'Datos del cliente'" class="title is-primary"></li>
+                            <li th:text="${factura.cliente}"></li>
+                            <li th:text="${factura.cliente.email}"></li>
+                        </ul>
+                        <ul>
+                            <li th:text="'Datos de la Factura'" class="is-primary"></li>
+                            <li th:text="'Folio: ' + ${factura.id}"></li>
+                            <li th:text="'Descripcion: ' + ${factura.descripcion}"></li>
+                            <li th:text="'Fecha: ' + ${factura.created_At}"></li>
+                        </ul>
+                    </div>
                 </div>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Save</a>
+                    <a href="#" class="card-footer-item">Edit</a>
+                    <a href="#" class="card-footer-item">Delete</a>
+                </footer>
             </div>
-            <footer class="card-footer">
-                <a href="#" class="card-footer-item">Save</a>
-                <a href="#" class="card-footer-item">Edit</a>
-                <a href="#" class="card-footer-item">Delete</a>
-            </footer>
         </div>
-    </div>
-</section>
+    </section>
 
-<footer th:replace="layout/layout  :: footer"></footer>
+    <footer th:replace="layout/layout  :: footer"></footer>
 </body>
+
 </html>
