@@ -21,7 +21,8 @@
 
                                     <label class="label">Descripcion:</label>
                                     <textarea class="textarea is-info" th:field="*{descripcion}"
-                                        placeholder="Descripcion..."></textarea>
+                                        placeholder="Descripcion..." th:errorclass="'input is-dagner'"></textarea>
+                                        <div class="message is-dagner" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{'descripcion'}" ></div>
 
                                     <label class="label">Observaciones: </label>
                                     <textarea class="textarea is-info" th:field="*{observacion}"
