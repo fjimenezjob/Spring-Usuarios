@@ -125,7 +125,8 @@ public class ClienteController {
 
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-        Cliente cliente = clienteService.findOne(id);
+        
+        Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 
         if (cliente == null) {
             return "redirect:/listar";
