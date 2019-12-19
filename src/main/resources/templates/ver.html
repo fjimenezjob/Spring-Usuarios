@@ -47,7 +47,7 @@
                 <section class="section">
                     <div class="container">
                             <td><a class="button is-success" th:href="@{/factura/form/} + ${cliente.id}">Crear Factura</a></td><br><br>
-                        <div th:if="${#lists.isEmpty(cliente.facturas)}" class="notification is-warning">
+                        <div th:if="${#lists.isEmpty(cliente.facturas)}" class="notification is-danger">
                             <h1>No hay facturas asociadas para el cliente <strong th:text="${cliente.nombre + ' ' + cliente.apellido + '.'}"></strong></h1>
                             
                         </div>
@@ -59,6 +59,7 @@
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Ver</th>
+                                    <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,6 +69,7 @@
                                     <td th:text="${factura.created_At}"></td>
                                     <td th:text="${factura.total}"></td>
                                     <td><a class="button is-info" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="Detalle"></a></td>
+                                    <td><a class="button is-info" th:href="@{'/factura/eliminar/' + ${factura.id}}" th:text="Eliminar" onclick="return confirm('Esta seguro??')"></a></td>
                                 </tr>
                             </tbody>
                         </table>

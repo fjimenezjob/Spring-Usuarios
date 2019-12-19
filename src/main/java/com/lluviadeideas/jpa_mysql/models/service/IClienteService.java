@@ -29,4 +29,6 @@ public interface IClienteService {
     public Producto finProductoById(Long id);
 
     public Factura findFacturaById(Long id);
+
+    public void deleteFacturaById(Long id);
 }

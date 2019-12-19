@@ -37,16 +37,14 @@ public class FacturaController {
     private IClienteService clienteService;
 
     @GetMapping("/ver/{id}")
-    public String ver(@PathVariable(value="id") Long id,
-        Model model,
-        RedirectAttributes flash) {
+    public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
         Factura factura = clienteService.findFacturaById(id);
         if (factura == null) {
             flash.addAttribute("error", "La factura No existe en la base de datos");
             return "redirect:/listar";
         }
         model.addAttribute("factura", factura);
-        model.addAttribute("titulo" , "Factura :".concat(' ' + factura.getDescripcion()));
+        model.addAttribute("titulo", "Factura :".concat(' ' + factura.getDescripcion()));
         return "factura/ver";
     }
 
@@ -70,14 +68,13 @@ public class FacturaController {
     }
 
     @PostMapping("/form")
-    public String guardar(@Valid Factura factura,
-        BindingResult result,
-        @RequestParam(name = "item_id[]", required = false) Long[] itemId,
-        @RequestParam(name = "cantidad[]", required = false) Integer[] cantidad,
-        SessionStatus status, Model model) {
+    public String guardar(@Valid Factura factura, BindingResult result,
+            @RequestParam(name = "item_id[]", required = false) Long[] itemId,
+            @RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, SessionStatus status,
+            Model model) {
 
-        if(result.hasErrors()) {
-            model.addAttribute("titulo", "Crear Factura" );
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Crear Factura");
             return "factura/form";
         }
 
@@ -95,11 +92,21 @@ public class FacturaController {
             linea.setProducto(producto);
             factura.addItemFactura(linea);
 
-            log.info("ID: "+itemId[i].toString()+  " Cantidad: " + cantidad[i].toString());
+            log.info("ID: " + itemId[i].toString() + " Cantidad: " + cantidad[i].toString());
         }
-        
+
         clienteService.saveFactura(factura);
         status.setComplete();
         return "redirect:/ver/" + factura.getCliente().getId();
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable(value = "id") Long id) {
+        Factura factura = clienteService.findFacturaById(id);
+        if (factura != null) {
+            clienteService.deleteFacturaById(id);
+            return "redirect:/ver/" + factura.getCliente().getId();
+        }
+        return "redirect:/listar";
     }
 }
