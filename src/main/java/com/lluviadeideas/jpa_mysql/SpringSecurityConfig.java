@@ -7,7 +7,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import javax.sql.DataSource;
+
+import com.lluviadeideas.jpa_mysql.models.service.JpaUserDetailsService;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
@@ -17,14 +18,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passEncoder;
 
     @Autowired
-    private DataSource dataSource;
+    private JpaUserDetailsService userDetailsService;
 
 
     @Autowired
     public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
-        build.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passEncoder)
-        .usersByUsernameQuery("SELECT username, password, enabled from users where username=?")
-        .authoritiesByUsernameQuery("SELECT u.username, a.authority from authorities a inner join users u on (a.user_id=u.id) where u.username=?");
+
+        build.userDetailsService(userDetailsService).passwordEncoder(passEncoder);
     }
 
     @Override
@@ -39,5 +39,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .exceptionHandling().accessDeniedPage("/error_403");
     }
-
 }
