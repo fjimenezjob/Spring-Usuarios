@@ -46,7 +46,7 @@
                 </div>
                 <section class="section">
                     <div class="container">
-                            <td><a class="button is-success" th:href="@{/factura/form/} + ${cliente.id}">Crear Factura</a></td><br><br>
+                            <td><a sec:authorize="hasRole('ROLE_ADMIN')" class="button is-success" th:href="@{/factura/form/} + ${cliente.id}">Crear Factura</a></td><br><br>
                         <div th:if="${#lists.isEmpty(cliente.facturas)}" class="notification is-danger">
                             <h1>No hay facturas asociadas para el cliente <strong th:text="${cliente.nombre + ' ' + cliente.apellido + '.'}"></strong></h1>
                             

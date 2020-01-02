@@ -33,7 +33,7 @@
                                 Pagina Principal
                             </a>
 
-                            <a class="navbar-item" th:href="@{/form}">
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-item" th:href="@{/form}">
                                 Agregar Usuario
                             </a>
 
@@ -67,7 +67,6 @@
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                         <button onclick="document.getElementById('logoutForm').submit();" type="submit" class="button is-danger">Cerrar Sesión</button>
                                     </form>
-                                    <p>Autorización: <a sec:authentication="principal.authorities"></a></p>
                                 </div>
                                 <div sec:authorize="!isAuthenticated()" class="buttons">
                                     <a class="button is-primary" th:href="@{/login}">Iniciar Sesión</a>
@@ -95,6 +94,7 @@
                             href="https://github.com/fjimenezJOB/Spring-Usuarios.git">GitHub.</a>
                         Licencia : <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
                     </p>
+                    <p sec:authorize="isAuthenticated()"><strong>Autorización: </strong> <a sec:authentication="principal.authorities"></a></p>
                     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
                     <script th:src="@{/js/jquery-ui.min.js}"></script>
                 </div>
