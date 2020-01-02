@@ -19,7 +19,6 @@
                         <a class="navbar-item">
                             <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
                         </a>
-
                         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                             data-target="navbarBasicExample">
                             <span aria-hidden="true"></span>
@@ -41,7 +40,6 @@
                                 <a class="navbar-link">
                                     Mas
                                 </a>
-
                                 <div class="navbar-dropdown">
                                     <a class="navbar-item" th:href="@{/listar}">
                                         Lista De Clientes
@@ -61,11 +59,17 @@
                         </div>
                         <div class="navbar-end">
                             <div class="navbar-item">
+
+                                <a class="button" th:href="@{/locale(lang=es_ES)}">ES</a>
+                                <a class="button" th:href="@{/locale(lang=en_US)}">US</a>
+                                <a class="button" th:href="@{/locale(lang=de_DE)}">DE</a>
+
                                 <div sec:authorize="isAuthenticated()" class="buttons">
-                                    <a class="button is-primary" sec:authentication="name" ></a>
+                                    <a class="button is-primary" sec:authentication="name"></a>
                                     <form id="logoutForm" th:action="@{/logout}" method="POST">
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                                        <button onclick="document.getElementById('logoutForm').submit();" type="submit" class="button is-danger">Cerrar Sesión</button>
+                                        <button onclick="document.getElementById('logoutForm').submit();" type="submit"
+                                            class="button is-danger">Cerrar Sesión</button>
                                     </form>
                                 </div>
                                 <div sec:authorize="!isAuthenticated()" class="buttons">
@@ -94,7 +98,8 @@
                             href="https://github.com/fjimenezJOB/Spring-Usuarios.git">GitHub.</a>
                         Licencia : <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
                     </p>
-                    <p sec:authorize="isAuthenticated()"><strong>Autorización: </strong> <a sec:authentication="principal.authorities"></a></p>
+                    <p sec:authorize="isAuthenticated()"><strong>Autorización: </strong> <a
+                            sec:authentication="principal.authorities"></a></p>
                     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
                     <script th:src="@{/js/jquery-ui.min.js}"></script>
                 </div>
