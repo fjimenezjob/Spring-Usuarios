@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="layout/layout :: head"></head>
 
 <body>
@@ -58,8 +57,8 @@
                                     <th>Descripcion</th>
                                     <th>Fecha</th>
                                     <th>Total</th>
-                                    <th>Ver</th>
-                                    <th>Eliminar</th>
+                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Ver</th>
+                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,8 +67,8 @@
                                     <td th:text="${factura.descripcion}"></td>
                                     <td th:text="${factura.created_At}"></td>
                                     <td th:text="${factura.total}"></td>
-                                    <td><a class="button is-info" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="Detalle"></a></td>
-                                    <td><a class="button is-danger" th:href="@{'/factura/eliminar/' + ${factura.id}}" th:text="Eliminar" onclick="return confirm('Esta seguro??')"></a></td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-info" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="Detalle"></a></td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-danger" th:href="@{'/factura/eliminar/' + ${factura.id}}" th:text="Eliminar" onclick="return confirm('Esta seguro??')"></a></td>
                                 </tr>
                             </tbody>
                         </table>

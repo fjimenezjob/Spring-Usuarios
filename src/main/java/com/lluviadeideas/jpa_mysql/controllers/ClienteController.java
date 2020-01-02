@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +44,7 @@ public class ClienteController {
     @Autowired
     IUploadFileService uploadFileService;
 
+    @Secured("ROLE_USER")
     @GetMapping(value = "/uploads/{filename:.+}") // El ":.+" lo que hace es cojer la extensión del archivo (nombre de
                                                   // la foto + extensión).
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
@@ -71,6 +73,7 @@ public class ClienteController {
         return "listar";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/form")
     public String crear(Map<String, Object> model) {
         Cliente cliente = new Cliente();
@@ -80,7 +83,8 @@ public class ClienteController {
         model.put("footer", "Footer de la pagina");
         return "form";
     }
-
+    
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/form/{id}")
     public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
         Cliente cliente = null;
@@ -96,6 +100,7 @@ public class ClienteController {
         return "form";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String guardar(@Valid Cliente cliente, BindingResult result, Model model,
             @RequestParam("file") MultipartFile foto, SessionStatus status) {
@@ -123,6 +128,7 @@ public class ClienteController {
         return "redirect:/listar";
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model) {
         
@@ -136,6 +142,7 @@ public class ClienteController {
         return "ver";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") Long id) {
 
