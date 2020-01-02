@@ -5,6 +5,9 @@
 <body>
     <section class="section">
         <div class="container">
+            <div th:if="${error}" class="notification is-danger">
+              Ha habido un error, comprueba tu usuario y contraseña o contacta con un administrador.
+              </div>
             <header th:replace="layout/layout :: header"></header>
             <div class="card">
                 <div class="card-content">

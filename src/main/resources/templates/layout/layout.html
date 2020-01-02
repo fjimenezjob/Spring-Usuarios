@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8" />
@@ -61,13 +61,16 @@
                         </div>
                         <div class="navbar-end">
                             <div class="navbar-item">
-                                <div class="buttons">
-                                    <a class="button is-primary">
-                                        <strong>Sign up</strong>
-                                    </a>
-                                    <a class="button is-light">
-                                        Log in
-                                    </a>
+                                <div sec:authorize="isAuthenticated()" class="buttons">
+                                    <a class="button is-primary" sec:authentication="name" ></a>
+                                    <form id="logoutForm" th:action="@{/logout}" method="POST">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                        <button onclick="document.getElementById('logoutForm').submit();" type="submit" class="button is-danger">Cerrar Sesión</button>
+                                    </form>
+                                    <p>Autorización: <a sec:authentication="principal.authorities"></a></p>
+                                </div>
+                                <div sec:authorize="!isAuthenticated()" class="buttons">
+                                    <a class="button is-primary" th:href="@{/login}">Iniciar Sesión</a>
                                 </div>
                             </div>
                         </div>
@@ -88,10 +91,11 @@
             <footer th:fragment="footer">
                 <div class="content has-text-centered">
                     <p>
-                        <strong>VOLTEX</strong> by Fran Jiemnez. Repositorio de <a href="https://github.com/fjimenezJOB/Spring-Usuarios.git">GitHub.</a> 
+                        <strong>VOLTEX</strong> by Fran Jiemnez. Repositorio de <a
+                            href="https://github.com/fjimenezJOB/Spring-Usuarios.git">GitHub.</a>
                         Licencia : <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
                     </p>
-                    <script th:src="@{/js/jquery-3.2.1.min.js}" ></script>
+                    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
                     <script th:src="@{/js/jquery-ui.min.js}"></script>
                 </div>
             </footer>
