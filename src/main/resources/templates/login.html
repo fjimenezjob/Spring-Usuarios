@@ -5,22 +5,22 @@
 <body>
     <section class="section">
         <div class="container">
-            <div th:if="${error}" class="notification is-danger">
-              Ha habido un error, comprueba tu usuario y contraseña o contacta con un administrador.
-              </div>
             <header th:replace="layout/layout :: header"></header>
             <div class="card">
                 <div class="card-content">
                   <div class="content">
+                    <div th:text="#{text.login.error}" th:if="${error}" class="notification is-danger">
+                      Ha habido un error, comprueba tu usuario y contraseña o contacta con un administrador.
+                      </div>
                     <form th:action="@{/login}" method="post">
                         <div class="control">
-                            <label for="username">Username:
+                            <label th:text="#{text.login.username}" for="username">Username:</label>
                                 <input name="username" id="username" class="input" type="text" placeholder="Username" autofocus required>
-                            </label><br><br>
-                            <label for="password">Password:
+                            <br><br>
+                            <label th:text="#{text.login.password}" for="password">Password:</label>
                                 <input name="password" id="password" class="input" type="password" placeholder="Password" required>
-                            </label><br><br>
-                            <button class="button is-info" type="submit">Entrar</button>
+                            <br><br>
+                            <button th:text="#{text.login.entrar}" class="button is-info" type="submit">Entrar</button>
                         </div>
                     </form>
                   </div>
