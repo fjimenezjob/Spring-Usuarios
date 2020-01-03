@@ -1,6 +1,7 @@
 package com.lluviadeideas.jpa_mysql.controllers;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
 import com.lluviadeideas.jpa_mysql.models.entity.Factura;
@@ -11,6 +12,7 @@ import com.lluviadeideas.jpa_mysql.models.service.IClienteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +40,11 @@ public class FacturaController {
     @Autowired
     private IClienteService clienteService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @GetMapping("/ver/{id}")
-    public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
+    public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash, Locale locale) {
 
         Factura factura = clienteService.fetchFacturaByIdWithClienteWithItemFacturaWithProducto(id);
         
@@ -48,7 +53,7 @@ public class FacturaController {
             return "redirect:/listar";
         }
         model.addAttribute("factura", factura);
-        model.addAttribute("titulo", "Factura :".concat(' ' + factura.getDescripcion()));
+        model.addAttribute("titulo", messageSource.getMessage("text.ver.titulo", null, locale).concat(":"+' ' + factura.getDescripcion()));
         return "factura/ver";
     }
 

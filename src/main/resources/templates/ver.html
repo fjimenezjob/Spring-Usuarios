@@ -39,13 +39,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <a th:href="@{/listar}"><button class="button is-success is-rounded">Volver</button></a>
+                            <a th:href="@{/listar}"><button th:text="#{text.general.volver}" class="button is-success is-rounded"></button></a>
                         </div>
                     </div>
                 </div>
                 <section class="section">
                     <div class="container">
-                            <td><a sec:authorize="hasRole('ROLE_ADMIN')" class="button is-success" th:href="@{/factura/form/} + ${cliente.id}">Crear Factura</a></td><br><br>
+                            <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{text.cliente.crearFacturas}" class="button is-success" th:href="@{/factura/form/} + ${cliente.id}">Crear Factura</a></td><br><br>
                         <div th:if="${#lists.isEmpty(cliente.facturas)}" class="notification is-danger">
                             <h1>No hay facturas asociadas para el cliente <strong th:text="${cliente.nombre + ' ' + cliente.apellido + '.'}"></strong></h1>
                             
@@ -53,12 +53,12 @@
                         <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table is-striped is-bordered is-hoverable is-fullwidth">
                             <thead>
                                 <tr>
-                                    <th>Folio</th>
-                                    <th>Descripcion</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Ver</th>
-                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+                                    <th th:text="#{text.ver.folio}"></th>
+                                    <th th:text="#{text.ver.desc}">Descripcion</th>
+                                    <th th:text="#{text.cliente.createdAt}">Fecha</th>
+                                    <th th:text="#{text.ver.total}">Total</th>
+                                    <th th:text="#{text.ver.ver}" sec:authorize="hasRole('ROLE_ADMIN')">Ver</th>
+                                    <th th:text="#{text.cliente.eliminar}" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,8 +67,8 @@
                                     <td th:text="${factura.descripcion}"></td>
                                     <td th:text="${factura.created_At}"></td>
                                     <td th:text="${factura.total}"></td>
-                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-info" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="Detalle"></a></td>
-                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-danger" th:href="@{'/factura/eliminar/' + ${factura.id}}" th:text="Eliminar" onclick="return confirm('Esta seguro??')"></a></td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-info" th:href="@{'/factura/ver/' + ${factura.id}}" th:text="#{text.ver.detalle}"></a></td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a class="button is-danger" th:href="@{'/factura/eliminar/' + ${factura.id}}" th:text="#{text.cliente.eliminar}" onclick="return confirm('Esta seguro??')"></a></td>
                                 </tr>
                             </tbody>
                         </table>

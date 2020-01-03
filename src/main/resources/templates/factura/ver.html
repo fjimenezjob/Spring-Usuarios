@@ -17,26 +17,26 @@
                 </header>
                 <div class="card-content">
                     <div class="content">
-                        <a th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
+                        <a th:text="#{text.general.volver}" th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
 
                         <ul>
-                            <li th:text="'Datos del cliente'" class="title is-primary"></li>
+                            <li th:text="#{text.factura.ver.datosCliente}" class="title is-primary"></li>
                             <li th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"></li>
                             <li th:text="${factura.cliente.email}"></li>
                         </ul>
                         <ul>
-                            <li th:text="'Datos de la Factura'" class="title is-primary"></li>
-                            <li th:text="'Folio: ' + ${factura.id}"></li>
-                            <li th:text="'Descripcion: ' + ${factura.descripcion}"></li>
-                            <li th:text="'Fecha: ' + ${factura.created_At}"></li>
+                            <li th:text="#{text.factura.ver.datosFactura}" class="title is-primary"></li>
+                            <li th:text="#{text.ver.folio} +': '+ ${factura.id}"></li>
+                            <li th:text="#{text.ver.desc} +': '+ ${factura.descripcion}"></li>
+                            <li th:text="#{text.factura.ver.fecha} +': '+ ${factura.created_At}"></li>
                         </ul>
                         <table class="table is-striped is-bordered is-hoverable is-fullwidth">
                             <thead>
                                 <tr>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Total</th>
+                                    <th th:text="#{text.factura.ver.producto}">Producto</th>
+                                    <th th:text="#{text.factura.ver.precio}">Precio</th>
+                                    <th th:text="#{text.factura.ver.cantidad}">Cantidad</th>
+                                    <th th:text="#{text.ver.total}">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,7 +52,7 @@
                     <h5 class="button is-warning is-pulled-right" th:text="${'Total:  ' + factura.total+ '€'}"></h5>
                     <div class="card">
                         <header class="card-header">
-                          <p class="card-header-title">
+                          <p th:text="#{text.factura.ver.observaciones}" class="card-header-title">
                             Observaciones
                           </p>
                           <a href="#" class="card-header-icon" aria-label="more options">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <a th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
+                <a th:text="#{text.general.volver}" th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
             </div>
         </div>
     </section>

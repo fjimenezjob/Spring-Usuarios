@@ -3,6 +3,7 @@ package com.lluviadeideas.jpa_mysql.controllers;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import com.lluviadeideas.jpa_mysql.models.service.IUploadFileService;
 import com.lluviadeideas.jpa_mysql.util.paginator.PageRender;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +37,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @SessionAttributes("cliente")
 public class ClienteController {
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private IClienteService clienteService;
@@ -61,26 +66,23 @@ public class ClienteController {
     }
 
     @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-    public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-        Pageable pageRequest = PageRequest.of(page, 5);
+    public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Locale locale) {
+        Pageable pageRequest = PageRequest.of(page, 10);
         Page<Cliente> clientes = clienteService.findAll(pageRequest);
         PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
-        model.addAttribute("titulo", "Listado de clientes");
-        model.addAttribute("subtitulo", "Listado de Clientes de la web");
+        model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
+        model.addAttribute("subtitulo", messageSource.getMessage("text.cliente.listar.subtitulo", null, locale));
         model.addAttribute("clientes", clientes);
-        model.addAttribute("footer", "Footer de la pagina");
         model.addAttribute("page", pageRender);
         return "listar";
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/form")
-    public String crear(Map<String, Object> model) {
+    public String crear(Map<String, Object> model, Locale locale) {
         Cliente cliente = new Cliente();
         model.put("cliente", cliente);
-        model.put("titulo", "Formulario Cliente Registro");
-        model.put("subtitulo", "Formularo de inscripción");
-        model.put("footer", "Footer de la pagina");
+        model.put("titulo", messageSource.getMessage("text.form.titulo", null, locale));
         return "form";
     }
     
@@ -103,7 +105,7 @@ public class ClienteController {
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String guardar(@Valid Cliente cliente, BindingResult result, Model model,
-            @RequestParam("file") MultipartFile foto, SessionStatus status) {
+            @RequestParam("file") MultipartFile foto, SessionStatus status, Locale locale) {
 
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario Cliente Registro");
@@ -130,7 +132,7 @@ public class ClienteController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping(value = "/ver/{id}")
-    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+    public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, Locale locale) {
         
         Cliente cliente = clienteService.fetchByIdWithFacturas(id);
 
@@ -138,7 +140,7 @@ public class ClienteController {
             return "redirect:/listar";
         }
         model.put("cliente", cliente);
-        model.put("titulo", "Detalle Cliente: " + cliente.getNombre());
+        model.put("titulo", messageSource.getMessage("text.factura.ver.factura", null, locale).concat(":"+' '+ cliente.getNombre()));
         return "ver";
     }
 

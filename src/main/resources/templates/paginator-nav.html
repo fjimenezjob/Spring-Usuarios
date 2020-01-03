@@ -10,7 +10,7 @@
     <nav th:fragment="paginator" class="pagination" role="navigation" aria-label="pagination">
         <ul class="pagination-list">
             <li>
-                <span class="pagination-link" th:if="${page.first}">Primera Pagina</span>
+                <span class="pagination-link" th:text="#{text.paginator.primera}" th:if="${page.first}"></span>
                 <a class="pagination-link" th:if="${not page.first}" th:href="@{${page.url}(page=0)}">Primera Pagina</a>
             </li>
             <li>
@@ -25,7 +25,7 @@
                 <span class="pagination-link" th:if="${not page.hasNext}">>></span>
                 <a class="pagination-link" th:if="${page.hasNext}" th:href="@{${page.url}(page=${page.paginaActual})}">>></a>
             <li>
-                <span class="pagination-link" th:if="${page.last}">Ultima Pagina</span>
+                <span class="pagination-link" th:text="#{text.paginator.ultima}" th:if="${page.last}">Ultima Pagina</span>
                 <a class="pagination-link" th:if="${not page.last}" th:href="@{${page.url}(page=${page.totalPaginas -1})}" >Ultima Pagina</a>
             </li>
         </ul>
