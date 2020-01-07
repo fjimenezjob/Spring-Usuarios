@@ -1,6 +1,7 @@
 package com.lluviadeideas.jpa_mysql.viewPdf;
 
 import java.awt.Color;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,21 +15,33 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView {
 
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private LocaleResolver localeResolver;
+
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Locale locale = localeResolver.resolveLocale(request);
         Factura factura = (Factura) model.get("factura");
         PdfPTable tabla = new PdfPTable(1);
         tabla.setSpacingAfter(20);
 
         PdfPCell cell = null;
-        cell = new PdfPCell(new Phrase("Datos del Cliente"));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("text.factura.ver.datosCliente", null, locale)));
         cell.setBackgroundColor(new Color(184, 218, 255));
         cell.setPadding(8f);
         tabla.addCell(cell);
@@ -38,21 +51,21 @@ public class FacturaPdfView extends AbstractPdfView {
         PdfPTable tablaDos = new PdfPTable(1);
         tablaDos.setSpacingAfter(20);
 
-        cell = new PdfPCell(new Phrase("Datos de la Factura"));
+        cell = new PdfPCell(new Phrase(messageSource.getMessage("text.factura.ver.datosFactura", null, locale)));
         cell.setBackgroundColor(new Color(195, 230, 203));
         cell.setPadding(8f);
 
         tablaDos.addCell(cell);
-        tablaDos.addCell("Folio : " + factura.getId());
-        tablaDos.addCell("Descripción : " + factura.getDescripcion());
-        tablaDos.addCell("Fecha : " + factura.getCreated_At());
+        tablaDos.addCell(messageSource.getMessage("text.ver.folio", null, locale) + ": " + factura.getId());
+        tablaDos.addCell(messageSource.getMessage("text.ver.desc", null, locale) + ": " + factura.getDescripcion());
+        tablaDos.addCell(messageSource.getMessage("text.factura.ver.fecha", null, locale) + ": " + factura.getCreated_At());
 
         PdfPTable tablaTres = new PdfPTable(4);
-        tablaTres.setWidths(new float [] {2.5f, 1, 1, 1});
-        tablaTres.addCell("Producto");
-        tablaTres.addCell("Precio");
-        tablaTres.addCell("Cantidad");
-        tablaTres.addCell("Total");
+        tablaTres.setWidths(new float[] { 2.5f, 1, 1, 1 });
+        tablaTres.addCell(messageSource.getMessage("text.factura.ver.producto", null, locale));
+        tablaTres.addCell(messageSource.getMessage("text.factura.ver.precio", null, locale));
+        tablaTres.addCell(messageSource.getMessage("text.factura.ver.cantidad", null, locale));
+        tablaTres.addCell(messageSource.getMessage("text.ver.total", null, locale));
 
         for (ItemFactura item : factura.getItems()) {
             tablaTres.addCell(item.getProducto().getNombre());
