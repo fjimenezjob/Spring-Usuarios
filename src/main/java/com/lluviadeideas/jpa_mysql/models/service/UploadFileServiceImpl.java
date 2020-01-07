@@ -26,10 +26,10 @@ public class UploadFileServiceImpl implements IUploadFileService {
         Path pathFoto = getPath(filename);
         log.info("pathFoto: " + pathFoto);
         Resource recurso = null;
-            recurso = new UrlResource(pathFoto.toUri());
-            if (!recurso.exists() && !recurso.isReadable()) {
-                throw new RuntimeException("Error: No se puede cargar la Imagen: " + pathFoto.toString());
-            }
+        recurso = new UrlResource(pathFoto.toUri());
+        if (!recurso.exists() && !recurso.isReadable()) {
+            throw new RuntimeException("Error: No se puede cargar la Imagen: " + pathFoto.toString());
+        }
         return recurso;
     }
 
@@ -37,7 +37,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
     public String copy(MultipartFile file) throws IOException {
         String uniqueFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
         Path rootPath = getPath(uniqueFileName);
-        log.info("rootPath: " + rootPath);
+        log.info("rootPath:" + rootPath);
         Files.copy(file.getInputStream(), rootPath);
         return uniqueFileName;
     }
@@ -45,10 +45,10 @@ public class UploadFileServiceImpl implements IUploadFileService {
     @Override
     public boolean delete(String filename) {
         Path rootPath = getPath(filename);
-            File archivo = rootPath.toFile();
+        File archivo = rootPath.toFile();
 
         if (archivo.exists() && archivo.canRead()) {
-            if(archivo.delete()){
+            if (archivo.delete()) {
                 return true;
             }
         }
@@ -57,6 +57,5 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     public Path getPath(String filename) {
         return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
-
     }
 }

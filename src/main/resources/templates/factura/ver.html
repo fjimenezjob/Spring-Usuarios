@@ -18,6 +18,7 @@
                 <div class="card-content">
                     <div class="content">
                         <a th:text="#{text.general.volver}" th:href="@{'/ver/' + ${factura.cliente.id}}" class="button is-info">Volver</a>
+                        <a th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}" class="button" >Exportar a PDF</a>
 
                         <ul>
                             <li th:text="#{text.factura.ver.datosCliente}" class="title is-primary"></li>
