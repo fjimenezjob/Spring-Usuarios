@@ -36,7 +36,7 @@ public class FacturaPdfView extends AbstractPdfView {
         tablaDos.addCell("Descripción : " + factura.getDescripcion());
         tablaDos.addCell("Fecha : " + factura.getCreated_At());
 
-        PdfPTable tablaTres = new PdfPTable(1);
+        PdfPTable tablaTres = new PdfPTable(4);
         tablaTres.addCell("Producto");
         tablaTres.addCell("Precio");
         tablaTres.addCell("Cantidad");
