@@ -48,5 +48,15 @@
     "name": "NotNull.cliente.createdAt",
     "type": "java.lang.String",
     "description": "A description for 'NotNull.cliente.createdAt'"
+  },
+  {
+    "name": "java.runtime.version",
+    "type": "java.lang.String",
+    "description": "A description for 'java.runtime.version'"
+  },
+  {
+    "name": "maven.version",
+    "type": "java.lang.String",
+    "description": "A description for 'maven.version'"
   }
 ]}
