@@ -3,6 +3,7 @@ package com.lluviadeideas.jpa_mysql.controllers;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.lluviadeideas.jpa_mysql.models.entity.Cliente;
 import com.lluviadeideas.jpa_mysql.models.service.IClienteService;
 import com.lluviadeideas.jpa_mysql.models.service.IUploadFileService;
 import com.lluviadeideas.jpa_mysql.util.paginator.PageRender;
+import com.lluviadeideas.jpa_mysql.view.viewXml.ClienteList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +52,23 @@ public class ClienteController {
     @Autowired
     IUploadFileService uploadFileService;
 
+    @GetMapping(value ="/listar-rest")
+    public @ResponseBody ClienteList listarRest() {
+        return new ClienteList(clienteService.findAll());
+    }
+
+    @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
+    public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Locale locale) {
+        Pageable pageRequest = PageRequest.of(page, 7);
+        Page<Cliente> clientes = clienteService.findAll(pageRequest);
+        PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
+        model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
+        model.addAttribute("subtitulo", messageSource.getMessage("text.cliente.listar.subtitulo", null, locale));
+        model.addAttribute("clientes", clientes);
+        model.addAttribute("page", pageRender);
+        return "listar";
+    }
+
     @Secured("ROLE_USER")
     @GetMapping(value = "/uploads/{filename:.+}") // El ":.+" lo que hace es cojer la extensión del archivo (nombre de
                                                   // la foto + extensión).
@@ -65,17 +85,7 @@ public class ClienteController {
                 .body(recurso);
     }
 
-    @RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-    public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Locale locale) {
-        Pageable pageRequest = PageRequest.of(page, 7);
-        Page<Cliente> clientes = clienteService.findAll(pageRequest);
-        PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
-        model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
-        model.addAttribute("subtitulo", messageSource.getMessage("text.cliente.listar.subtitulo", null, locale));
-        model.addAttribute("clientes", clientes);
-        model.addAttribute("page", pageRender);
-        return "listar";
-    }
+
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/form")
