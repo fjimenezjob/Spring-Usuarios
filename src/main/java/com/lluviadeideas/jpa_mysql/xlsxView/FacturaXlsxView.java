@@ -35,7 +35,8 @@ public class FacturaXlsxView extends AbstractXlsxView {
     @Override
     protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-                
+        
+        response.setHeader("Content-Dsiposition","attachment; filename=\"factura_view.xlsx\"");
         Locale locale = localeResolver.resolveLocale(request);
         Factura factura = (Factura) model.get("factura");
         Sheet sheet = workbook.createSheet();
@@ -87,16 +88,32 @@ public class FacturaXlsxView extends AbstractXlsxView {
         int rownum = 10;
         for(ItemFactura item : factura.getItems()){
             Row fila = sheet.createRow(rownum ++);
+
             cell = fila.createCell(0);
-            fila.createCell(0).setCellValue(item.getProducto().getNombre());
-            fila.createCell(1).setCellValue(item.getProducto().getPrecio());
-            fila.createCell(2).setCellValue(item.getCantidad());
-            fila.createCell(3).setCellValue(item.calcularImporte());
+            cell.setCellValue(item.getProducto().getNombre());
+            cell.setCellStyle(tbodyStyle);
+
+            cell =  fila.createCell(1);
+            cell.setCellValue(item.getProducto().getPrecio());
+            cell.setCellStyle(tbodyStyle);
+
+            cell = fila.createCell(2);
+            cell.setCellValue(item.getCantidad());
+            cell.setCellStyle(tbodyStyle);
+
+            cell = fila.createCell(3);
+            cell.setCellValue(item.calcularImporte());
+            cell.setCellStyle(tbodyStyle);
         }
 
         Row filatotal = sheet.createRow(rownum ++);
-        filatotal.createCell(2).setCellValue(messageSource.getMessage("text.ver.total", null, locale));
-        filatotal.createCell(3).setCellValue(factura.getTotal());
+        cell = filatotal.createCell(2);
+        cell.setCellValue(messageSource.getMessage("text.ver.total", null, locale));
+        cell.setCellStyle(tbodyStyle);
+
+        cell = filatotal.createCell(3);
+        cell.setCellValue(factura.getTotal());
+        cell.setCellStyle(tbodyStyle);
     }
     
 }
