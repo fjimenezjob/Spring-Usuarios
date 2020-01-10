@@ -70,7 +70,7 @@ public class FacturaXlsxView extends AbstractXlsxView {
         tbodyStyle.setBorderBottom(BorderStyle.THIN);
         tbodyStyle.setBorderTop(BorderStyle.THIN);
         tbodyStyle.setBorderLeft(BorderStyle.THIN);
-        tbodyStyle.setBorderRight(BorderStyle.THIN);
+        tbodyStyle.setBorderRight(BorderStyle.MEDIUM);
 
 
         
