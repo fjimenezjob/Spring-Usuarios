@@ -1,4 +1,4 @@
-package com.lluviadeideas.jpa_mysql.xlsxView;
+package com.lluviadeideas.jpa_mysql.view.viewXlsx;
 
 import java.util.Locale;
 import java.util.Map;

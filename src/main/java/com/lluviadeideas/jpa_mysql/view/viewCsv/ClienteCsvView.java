@@ -1,4 +1,4 @@
-package com.lluviadeideas.jpa_mysql.viewCsv;
+package com.lluviadeideas.jpa_mysql.view.viewCsv;
 
 import java.util.Map;
 

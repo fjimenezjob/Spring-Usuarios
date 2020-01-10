@@ -21,6 +21,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -51,6 +53,7 @@ public class Cliente implements Serializable {
     private Date createdAt;
 
     @OneToMany(mappedBy = "cliente",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Factura> facturas;
 
     private String foto;
@@ -127,6 +130,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "Cliente [apellido=" + apellido + ", nombre=" + nombre + "]";
     }
-
 
 }

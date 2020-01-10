@@ -1,4 +1,4 @@
-package com.lluviadeideas.jpa_mysql.viewPdf;
+package com.lluviadeideas.jpa_mysql.view.viewPdf;
 
 import java.awt.Color;
 import java.util.Locale;
