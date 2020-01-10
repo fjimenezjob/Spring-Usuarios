@@ -14,9 +14,7 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-
-
-@Component("listar")
+@Component("listar.csv")
 public class ClienteCsvView extends AbstractView {
 
 	public ClienteCsvView() {
